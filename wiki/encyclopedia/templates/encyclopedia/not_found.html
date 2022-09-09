@@ -1,0 +1,41 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{ entry_name }} not found
+{% endblock %}
+
+{% block body %}
+    
+    {% if matched  %}
+
+        <h1>Search results for "{{ entry_name }}"</h1>
+                
+        
+        <ul>
+            {% for match in matched %}
+                <li><a href="/wiki/{{match|safe}}">{{ match }}</a></li>
+            {% endfor %}
+        </ul>
+        
+        <!--a  href="/create/{{entry_name|safe}}">Create</a-->
+
+    {% else %}
+
+        <h1>404 Page not found</h1>
+                
+        <p>The entry <b>{{ entry_name }}</b> doesn't exist.</p>
+        
+        <!--form action="{% url 'encyclopedias:create' %}" method="POST">
+            {% csrf_token %}
+            <a  href="/create">Create</a>
+        </form-->
+
+        <form action="{% url 'encyclopedias:create'  %}" method="GET">
+            
+            <input name="create" type="submit" value="Create {{entry_name}}">
+        </form>
+
+
+    {% endif %}
+
+{% endblock %}
